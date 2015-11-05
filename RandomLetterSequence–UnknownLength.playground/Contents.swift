@@ -111,14 +111,54 @@ for (letter,probability) in letterProbabilities{
     
 }
 
-//last part, creating a 20 character string
-var i = 0;
+//last part, creating a 30 character string
+//building the empty output string
+var outputString: String = ""
 
-while (i < 26){
+for i in 1...30{
     
-    for (upperBoundry, value) in letterProbabilities{
+    
+    //Generate a random value 
+    let newRandomValue = arc4random_uniform(100000)
+    //Generate float random value
+    let newRandomValueFloat = Float(newRandomValue) / 1000
+    
+    //upper value float
+    var upperValue: Float = 0.0
+    
+    //1. looping through the probabilities dictionary 
+    //2. Add the probabilities to determine an "upper value" for the current letter in the dictionary
+    //3. check for when the random value generated is LESS THAN the upper value of the probability range for current letter: when this happens, add the letter to the output sequence
+    
+    
+    for(letter, probability) in letterProbabilities{
         
+        // determine the new upper value 
         
+        upperValue += probability
+        
+        // When the random value is less than the running total, or upper value, use this letter
+        
+        if (newRandomValueFloat < upperValue){
+            
+            //add the letter to the output sequence
+            outputString += String(letter)
+            
+            //stop scanning, we found one that matches 
+            //execution of code will continue with next iteration of outer "for" loop from 1 to 30
+            break
+            
+        }
         
     }
+    
+    
 }
+
+// Show the resulting string
+outputString
+
+// Verify that the string has the correct number of characters
+outputString.characters.count
+
+
